@@ -2,7 +2,6 @@
 var currentQuestionIndex = 0;
 var time = questions.length * 15;
 var timerId;
-
 // variables to reference DOM elements
 var questionsEl = document.getElementById('questions');
 var timerEl = document.getElementById('time');
@@ -23,12 +22,23 @@ function startQuiz() {
     // un-hide questions section
     questionsEl.classList.remove('hide')
     //start timer (high)
+    timerId = setInterval(function clockTick() {
+        // update time
+        time--;
+        timerEl.textContent = time;
+    
+        // check if user ran out of time
+        if (time <= 0) {
+            quizEnd();
+        }
+    }, 1000);
 
+   
     //you need to declare a var named timerId. You will also need to use setInterval and clockTick
 
     //show starting time (high)
 
-    // getQuestion();
+    getQuestion();
 }
 
 function getQuestion() { //this function is going to get the data from the questions array
@@ -57,24 +67,25 @@ function getQuestion() { //this function is going to get the data from the quest
 
 function questionClick(event) {
     var buttonEl = event.target;
-
+    var currentAnswer = questions[currentQuestionIndex].answer
     // if the clicked element is not a choice button, do nothing.
     if (!buttonEl.matches('.choice')) {
         return;
     }
 
     // check if user guessed right or wrong
-    if (true) { //replace true with a conditional statement that checks if the clicked choice button's value is the same as the questions[currentQuestionIndex]'s answer
-        //incorrect answer scenario
+    if (buttonEl.textContent === currentAnswer) {
 
-        // penalize time
-        // display new time on page
+        feedbackEl.textContent = 'Correct!';
+        feedbackEl.classList.remove('hide');
+
     } else {
-        //correct scenario
+        //incorrect scenario
 
-        // move to next question
+        time = time - 15;
+        feedbackEl.textContent = 'Incorrect';
+        feedbackEl.classList.remove('hide');
     }
-    // flash right/wrong feedback on page
 
     // move to next question
     currentQuestionIndex++;
@@ -102,18 +113,6 @@ function quizEnd() {
     // hide questions section
     questionsEl.setAttribute('class', 'hide');
 }
-
-function clockTick() {
-    // update time
-    time--;
-    timerEl.textContent = time;
-
-    // check if user ran out of time
-    if (time <= 0) {
-        quizEnd();
-    }
-}
-
 
 function saveHighscore() {
     // get value of input box
