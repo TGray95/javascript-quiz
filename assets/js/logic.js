@@ -11,9 +11,10 @@ var startBtn = document.getElementById('start');
 var initialsEl = document.getElementById('initials');
 var feedbackEl = document.getElementById('feedback');
 var startEl = document.getElementById('start-screen');
+var scoreEl = document.getElementById('final-score');
 // sound effects
-var sfxRight = new Audio('assets/sfx/correct.wav');
-var sfxWrong = new Audio('assets/sfx/incorrect.wav');
+var sfxRight = new Audio('./assets/sfx/correct.mp3');
+var sfxWrong = new Audio('./assets/sfx/incorrect.mp3');
 
 
 function startQuiz() {
@@ -78,13 +79,14 @@ function questionClick(event) {
 
         feedbackEl.textContent = 'Correct!';
         feedbackEl.classList.remove('hide');
-
+        sfxRight.play();
     } else {
         //incorrect scenario
 
         time = time - 15;
         feedbackEl.textContent = 'Incorrect';
         feedbackEl.classList.remove('hide');
+        sfxWrong.play();
     }
 
     // move to next question
@@ -117,20 +119,21 @@ function quizEnd() {
 function saveHighscore() {
     // get value of input box
     var initials = initialsEl.value.trim();
-
+    var score = scoreEl.textContent;
     // make sure value wasn't empty
     if (initials !== '') {
 
         //JSON.parse
         // get saved scores from localstorage (highscores), or if not any, set to empty array
-        
-
+        var highScores = JSON.parse(window.localStorage.getItem('highscores')) ?? [];
         // format new score object for current user
-        
-
+        var scoreData = {
+            user:initials,
+            userScore:score
+        }
         // save to localstorage
-        
-
+        highScores.push(scoreData)
+        window.localStorage.setItem('highscores', JSON.stringify(highScores))
         // redirect to next page
         window.location.href = 'highscores.html';
     }
