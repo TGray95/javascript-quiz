@@ -16,6 +16,7 @@ var scoreEl = document.getElementById('final-score');
 var sfxRight = new Audio('./assets/sfx/correct.mp3');
 var sfxWrong = new Audio('./assets/sfx/incorrect.mp3');
 
+timerEl.textContent = time;
 
 function startQuiz() {
     // hide start screen
@@ -58,7 +59,7 @@ function getQuestion() { //this function is going to get the data from the quest
         //.createElement
         var choiceBtn = document.createElement('button');
         //.setAttribute (set a class="choice")
-        choiceBtn.setAttribute('class', 'choice');
+        choiceBtn.setAttribute('class', 'choice btn btn-light');
         //.textContent
         choiceBtn.textContent = currentQuestion.choices[i];
         //.appendChild
@@ -78,14 +79,16 @@ function questionClick(event) {
     if (buttonEl.textContent === currentAnswer) {
 
         feedbackEl.textContent = 'Correct!';
-        feedbackEl.classList.remove('hide');
+        // feedbackEl.classList.remove('hide');
+        feedbackEl.setAttribute('class', 'alert alert-success row justify-content-center')
         sfxRight.play();
     } else {
         //incorrect scenario
 
         time = time - 15;
         feedbackEl.textContent = 'Incorrect';
-        feedbackEl.classList.remove('hide');
+        // feedbackEl.classList.remove('hide');
+        feedbackEl.setAttribute('class', 'alert alert-danger row justify-content-center');
         sfxWrong.play();
     }
 
@@ -114,6 +117,7 @@ function quizEnd() {
 
     // hide questions section
     questionsEl.setAttribute('class', 'hide');
+    feedbackEl.classList.add('hide');
 }
 
 function saveHighscore() {

@@ -1,3 +1,27 @@
 .hide {
     display:none;
 }
+
+#clear {
+    margin-top: 5px;
+}
+
+#score-page {
+    position: relative;
+    top: 2in;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+#quiz-container {
+    margin-top: 50px;
+}
+
+.choice {
+    margin: 10px;
+    font-size: 25px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
